@@ -10,34 +10,41 @@
   <body>
     <div class="container">
       <div class="leftContent">
-        <div class="temp-icon">
-            <img class="image-icon" src="assets/partly-cloudy-svgrepo-com.png" alt="">
+        <div class="left-header">
+            <div>
+                <input type="text"></input>
+                <button>SEARCH</button>
+            </div>
+          <img
+            class="image-icon"
+            src="assets/partly-cloudy-svgrepo-com.png"
+            alt=""
+          />
         </div>
         <div class="tempDetails">
-            <nav>
-                <a href="#" class="active">Today</a>
-                <a href="#">Week</a>
-            </nav>
-            <div>
+          <div class="forecastHeader">
+            <P>Forecast</P>
+          </div>
+          <div id="forecastList">
 
-            </div>
+          </div>
         </div>
       </div>
       <div class="rightContent">
         <div class="topRightContent">
-          <h1 id="city">Johannesburg</h1>
-          <p id="province">GAUTENG</p>
+          <h1 id="city"></h1>
+          <!-- <p id="province">GAUTENG</p> -->
+          <p>ZA</p>
         </div>
         <div class="bottomRightContent">
-            <div class="date">
-                <p id="time">8:43 a.m</p>
-                <p id="day">Monday, November 15</p>
-            </div>
-            <div class="bottomRight">
-                <h2>65</h2>
-            </div>
+          <div class="date">
+            <p id="time"></p>
+            <p id="day">Monday, November 15</p>
+          </div>
+          <div class="bottomRight">
+            <h2 id="temp">65</h2>
+          </div>
         </div>
-        
       </div>
     </div>
   </body>
