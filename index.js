@@ -10,7 +10,6 @@ let setMonth = "";
 let setDay = "";
 let weatherData = "";
 let forecastData = "";
-let tempIcon = "";
 
 const months = [
   "January",
@@ -44,80 +43,217 @@ const showPosition = (position) => {
 getLocation();
 
 // Variable for DOM elements
+const searchInput = document.getElementById("searchInput");
+const searchBtn = document.getElementById("searchBtn");
 const temperature = document.getElementById("temp");
+const HeaderIcon = document.getElementById("leftHeaderIcon");
 const city = document.getElementById("city");
-const provice = document.getElementById("province");
+const country = document.getElementById("country");
 const dayTime = document.getElementById("time");
 const day = document.getElementById("day");
 
-async function weatherFn() {
-  const weather = `https://api.openweathermap.org/data/2.5/weather?lat=-26.2569984&lon=27.8757376&appid=${apiKey}&units=metric`;
+// Handles search button functionality
+searchBtn.addEventListener("click", () => {
+  const location = searchInput.value.trim();
+  if (location) {
+    weatherFn(location);
+    forecastFn(location);
+    console.log("Location: ", location);
+  }
+});
 
-  try {
-    const res = await fetch(weather);
-    const data = await res.json();
-    if (res.ok) {
-      weatherData = data.main;
-      // console.log(data);
+// Function for fetching weather info
+async function weatherFn(location) {
+  if (location) {
+    const searchUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&units=metric`;
 
-      temperature.innerText = `${Math.round(weatherData.temp)}°`;
-      tempIcon.innerText = time = new Date(); // set current date and time
-        
-      time.getTime();
-      setMonth = months[time.getMonth()];
-      setDate = time.getDate();
-      city.innerText = data.name;
-      dayTime.innerText = `${time.getHours()}:${time.getMinutes()}`;
-      day.innerText = `${setMonth} ${setDate}`;
+    try {
+      const res = await fetch(searchUrl);
+      const data = await res.json();
+      console.log(data);
+
+      if (res.ok) {
+        weatherData = data.main;
+        const tempIcon = data.weather[0].icon;
+        const tempIconUrl = `https://openweathermap.org/img/wn/${tempIcon}@2x.png`;
+        const tempDescription = data.weather[0].description;
+        const description =
+          tempDescription.charAt(0).toUpperCase() + tempDescription.slice(1);
+
+        temperature.innerText = `${Math.round(weatherData.temp)}°`;
+        HeaderIcon.innerHTML = `<img class="image-icon" src="${tempIconUrl}" /><p>${description}</p>`;
+        tempIcon.innerText = time = new Date(); // set current date and time
+
+        time.getTime();
+        setMonth = months[time.getMonth()];
+        setDate = time.getDate();
+        city.innerText = data.name;
+        country.innerText = data.sys.country
+        dayTime.innerText = `${time.getHours()}:${time.getMinutes()}`;
+        day.innerText = `${setMonth} ${setDate}`;
+      }
+    } catch {
+      console.log("Error: ", error);
     }
-  } catch {
-    console.log("Error: ", error);
+  } else {
+    const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=-26.2569984&lon=27.8757376&appid=${apiKey}&units=metric`;
+
+    try {
+      const res = await fetch(weatherUrl);
+      const data = await res.json();
+      console.log(data);
+
+      if (res.ok) {
+        weatherData = data.main;
+        const tempIcon = data.weather[0].icon;
+        const tempIconUrl = `https://openweathermap.org/img/wn/${tempIcon}@2x.png`;
+        const tempDescription = data.weather[0].description;
+        const description =
+          tempDescription.charAt(0).toUpperCase() + tempDescription.slice(1);
+        console.log(data.weather[0].description);
+
+        temperature.innerText = `${Math.round(weatherData.temp)}°`;
+        //   const imgIcon = document.createElement('div')
+        HeaderIcon.innerHTML = `<img class="image-icon" src="${tempIconUrl}" /><p>${description}</p>`;
+        //   HeaderIcon.appendChild(imgIcon)
+        tempIcon.innerText = time = new Date(); // set current date and time
+
+        time.getTime();
+        setMonth = months[time.getMonth()];
+        setDate = time.getDate();
+        city.innerText = data.name;
+        dayTime.innerText = `${time.getHours()}:${time.getMinutes()}`;
+        day.innerText = `${setMonth} ${setDate}`;
+      }
+    } catch {
+      console.log("Error: ", error);
+    }
   }
 }
 
 const forecastList = document.getElementById("forecastList");
 
 // Function for fetching forecast
-const forecast = async () => {
-  const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=-26.2569984&lon=27.8757376&appid=${apiKey}&units=metric`;
+const forecastFn = async (location) => {
+    if(location){
+        const searchUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=${apiKey}&units=metric`;
 
-  try {
-    const res = await fetch(forecastUrl);
-    const data = await res.json();
+        try {
+            const res = await fetch(searchUrl);
+            const data = await res.json();
+        
+            if (res.ok) {
+              let info = data.list;
+        
+              // Get today's date in YYYY-MM-DD format
+              const today = new Date().toISOString().split("T")[0];
+        
+              // Filter the data to show only today's forecast
+              const todayForecasts = info.filter((item) =>
+                item.dt_txt.startsWith(today)
+              );
+        
+              forecastList.innerHTML = "";
+              if (todayForecasts.length === 0) {
+                forecastList.innerHTML = `<p>No forecast available for today</p>`;
+              } else {
+                todayForecasts.forEach((item, index) => {
+                  const temperature = item.main.temp; // Access the temperature
+                  const time = item.dt_txt.split(" ")[1]; // Extract only the time
+                  const iconCode = item.weather[0].icon;
+                  const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
 
-    if (res.ok) {
-      let info = data.list;
+                  // Append new list items
+                  const listItem = document.createElement("li");
+                  listItem.setAttribute("key", index);
+                  listItem.innerHTML = `<p>${time}</p><div class="icon-temp"><img src="${iconUrl}" /><p>${temperature}°C</p></div>`;
+                  forecastList.appendChild(listItem);
+                });
+              }
+            } else {
+              console.log("Error: Failed to fetch forecast data.");
+            }
+          } catch {
+            console.log("Error: ", error.message);
+          }
+    }else{
+        const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=-26.2569984&lon=27.8757376&appid=${apiKey}&units=metric`;
 
-      // Get today's date in YYYY-MM-DD format
-      const today = new Date().toISOString().split("T")[0];
-
-      // Filter the data to show only today's forecast
-      const todayForecasts = info.filter((item) =>
-        item.dt_txt.startsWith(today)
-      );
-
-      if (todayForecasts.length === 0) {
-        forecastList.innerHTML = `<p>No forecast available for today</p>`;
-      } else {
-        todayForecasts.forEach((item, index) => {
-          const temperature = item.main.temp; // Access the temperature
-          const time = item.dt_txt.split(" ")[1]; // Extract only the time
-          const iconCode = item.weather[0].icon;
-          const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
-          // Append new list items
-          const listItem = document.createElement("li");
-          listItem.setAttribute("key", index);
-          listItem.innerHTML = `<p>${time}</p><div class="icon-temp"><img src="${iconUrl}" /><p>${temperature}°C</p></div>`;
-          forecastList.appendChild(listItem);
-        });
-      }
-    } else {
-      console.log("Error: Failed to fetch forecast data.");
+        try {
+            const res = await fetch(forecastUrl);
+            const data = await res.json();
+        
+            if (res.ok) {
+              let info = data.list;
+        
+              // Get today's date in YYYY-MM-DD format
+              const today = new Date().toISOString().split("T")[0];
+        
+              // Filter the data to show only today's forecast
+              const todayForecasts = info.filter((item) =>
+                item.dt_txt.startsWith(today)
+              );
+        
+              if (todayForecasts.length === 0) {
+                forecastList.innerHTML = `<p>No forecast available for today</p>`;
+              } else {
+                todayForecasts.forEach((item, index) => {
+                  const temperature = item.main.temp; // Access the temperature
+                  const time = item.dt_txt.split(" ")[1]; // Extract only the time
+                  const iconCode = item.weather[0].icon;
+                  const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+                  // Append new list items
+                  const listItem = document.createElement("li");
+                  listItem.setAttribute("key", index);
+                  listItem.innerHTML = `<p>${time}</p><div class="icon-temp"><img src="${iconUrl}" /><p>${temperature}°C</p></div>`;
+                  forecastList.appendChild(listItem);
+                });
+              }
+            } else {
+              console.log("Error: Failed to fetch forecast data.");
+            }
+          } catch {
+            console.log("Error: ", error.message);
+          }
     }
-  } catch {
-    console.log("Error: ", error.message);
-  }
+
+//   try {
+//     const res = await fetch(forecastUrl);
+//     const data = await res.json();
+
+//     if (res.ok) {
+//       let info = data.list;
+
+//       // Get today's date in YYYY-MM-DD format
+//       const today = new Date().toISOString().split("T")[0];
+
+//       // Filter the data to show only today's forecast
+//       const todayForecasts = info.filter((item) =>
+//         item.dt_txt.startsWith(today)
+//       );
+
+//       if (todayForecasts.length === 0) {
+//         forecastList.innerHTML = `<p>No forecast available for today</p>`;
+//       } else {
+//         todayForecasts.forEach((item, index) => {
+//           const temperature = item.main.temp; // Access the temperature
+//           const time = item.dt_txt.split(" ")[1]; // Extract only the time
+//           const iconCode = item.weather[0].icon;
+//           const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+//           // Append new list items
+//           const listItem = document.createElement("li");
+//           listItem.setAttribute("key", index);
+//           listItem.innerHTML = `<p>${time}</p><div class="icon-temp"><img src="${iconUrl}" /><p>${temperature}°C</p></div>`;
+//           forecastList.appendChild(listItem);
+//         });
+//       }
+//     } else {
+//       console.log("Error: Failed to fetch forecast data.");
+//     }
+//   } catch {
+//     console.log("Error: ", error.message);
+//   }
 };
 
 weatherFn();
-forecast();
+forecastFn();

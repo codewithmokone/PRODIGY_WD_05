@@ -5,22 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="index.js" defer></script>
     <link rel="stylesheet" href="style.css" />
+    <!-- External links -->
+     <script src="https://kit.fontawesome.com/93dbfe216e.js" crossorigin="anonymous"></script>
     <title>Weather App</title>
   </head>
   <body>
     <div class="container">
       <div class="leftContent">
-        <div class="left-header">
-            <div>
-                <input type="text"></input>
-                <button>SEARCH</button>
+            <div class="left-header">
+                <div class="searchContainer">
+                    <input id="searchInput" type="text" placeholder="Enter city name"></input>
+                    <button id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
+                <div id="leftHeaderIcon">
+
+                </div>
             </div>
-          <img
-            class="image-icon"
-            src="assets/partly-cloudy-svgrepo-com.png"
-            alt=""
-          />
-        </div>
         <div class="tempDetails">
           <div class="forecastHeader">
             <P>Forecast</P>
@@ -34,7 +34,7 @@
         <div class="topRightContent">
           <h1 id="city"></h1>
           <!-- <p id="province">GAUTENG</p> -->
-          <p>ZA</p>
+          <p id="country">ZA</p>
         </div>
         <div class="bottomRightContent">
           <div class="date">
