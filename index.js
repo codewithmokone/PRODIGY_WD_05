@@ -1,5 +1,3 @@
-const url = "http://api.openweathermap.org/data/2.5/weather";
-
 const apiKey = "2c30634243f65ad7130c3c5dba70dd9a";
 
 let lat = "";
@@ -22,7 +20,7 @@ const showPosition = async (position) => {
   lon = position.coords.longitude;
 
   if (lat && lon) {
-    const locationUrl = `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+    const locationUrl = `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=${apiKey}`;
 
     try {
       const res = await fetch(locationUrl);
