@@ -186,7 +186,7 @@
     justify-content: end;
 }
 
-.bottomRight h2 {
+#currentTemp {
     color: white;
     font-size: 100px;
     font-weight: 500;

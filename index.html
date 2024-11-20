@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
     <script src="index.js" defer></script>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css" >
     <!-- External links -->
+    <script src="https://MomentJS.com/downloads/moment.js"></script>
      <script src="https://kit.fontawesome.com/93dbfe216e.js" crossorigin="anonymous"></script>
     <title>Weather App</title>
   </head>
@@ -14,7 +15,7 @@
       <div class="leftContent">
             <div class="left-header">
                 <div class="searchContainer">
-                    <input id="searchInput" type="text" placeholder="Enter city name"></input>
+                    <input id="searchInput" type="text" placeholder="Enter city name">
                     <button id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </div>
                 <div id="leftHeaderIcon">
@@ -32,20 +33,20 @@
       </div>
       <div class="rightContent">
         <div class="topRightContent">
-          <h1 id="city"></h1>
-          <!-- <p id="province">GAUTENG</p> -->
-          <p id="country">ZA</p>
+          <h1 id="city">City</h1>
+          <p id="country">Country</p>
         </div>
         <div class="bottomRightContent">
           <div class="date">
-            <p id="time"></p>
-            <p id="day">Monday, November 15</p>
+            <p id="time">Time</p>
+            <p id="day">Date</p>
           </div>
           <div class="bottomRight">
-            <h2 id="temp">65</h2>
+            <h2 id="currentTemp">65</h2>
           </div>
         </div>
       </div>
     </div>
+    
   </body>
 </html>
