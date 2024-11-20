@@ -5,7 +5,6 @@ const apiKey = "2c30634243f65ad7130c3c5dba70dd9a";
 let lat = "";
 let lon = "";
 let weatherData = "";
-let forecastData = "";
 let locationCity = "";
 
 // Function to get current location
@@ -90,18 +89,16 @@ async function weatherFn() {
 
 }
 
-
-
 // Function for fetching forecast
 const forecastFn = async () => {
   if (!locationCity) {
-    return console.log("No location");
+    return console.log("No location provided.");
   }
 
-  const searchUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${locationCity}&appid=${apiKey}&units=metric`;
+  const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${locationCity}&appid=${apiKey}&units=metric`;
 
   try {
-    const res = await fetch(searchUrl);
+    const res = await fetch(forecastUrl);
     const data = await res.json();
 
     if (res.ok) {
