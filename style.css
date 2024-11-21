@@ -92,12 +92,19 @@
 
 #forecastList {
   width: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: auto;
   gap: 10px;
 }
+
+#forecastList::-webkit-scrollbar {
+    display: none;
+  }
 
 #forecastList li {
   width: 100%;
