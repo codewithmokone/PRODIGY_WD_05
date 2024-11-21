@@ -16,9 +16,6 @@ A simple and elegant weather application built using **HTML**, **CSS**, **JavaSc
 
 ---
 
-## Overview:
-The web app was build that fetches weather data from a weather API based on the user's location or a user-inputted location. Display the current weather conditions, temperature, and other relevant information.
-
 ## Technologies Used:
 - **HTML**: Structure of the web page.
 - **CSS**: Styling for the application.
@@ -30,8 +27,38 @@ The web app was build that fetches weather data from a weather API based on the 
 
 ## Installation
 
-### Clone this repository:
+1. Clone this repository:
 - https://github.com/codewithmokone/PRODIGY_WD_05.git 
 
-### Visit the website:
+2. Navigate to project folder:
+- cd weather-app
+
+3. Open the index.html in the browser:
+- open index.html
+
+## Dependencies
+- Moment.js
+- OpenWeatherMap API
+
+## Future Improvements
+- Add hourly and weekly weather forecasts.
+- Enable geolocation to fetch weather data for the user’s current location.
+- Provide an option to toggle between Celsius and Fahrenheit.
+- Improve accessibility (ARIA labels, keyboard navigation).
+
+## App Usage
+1. Enter the name of a city in the search bar.
+2. Click the search button to view the current weather data.
+3. The app will display:
+- City name and country
+- Current temperature (in Celsius or Fahrenheit)
+- Weather description
+- Local time of the city
+
+## Visit the website:
 - https://imaginative-donut-911ecd.netlify.app
+
+## Author
+- Simon Lephoto - Developer
+
+## Feel free to contribute, suggest improvements, or raise issues! 😊
