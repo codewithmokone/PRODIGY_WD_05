@@ -71,7 +71,7 @@ async function weatherFn() {
         tempDescription.charAt(0).toUpperCase() + tempDescription.slice(1);
 
       temperature.innerText = `${Math.round(weatherData.temp)}°`;
-      HeaderIcon.innerHTML = `<img class="image-icon" src="${tempIconUrl}" /><p>${description}</p>`;
+      HeaderIcon.innerHTML = `<img class="image-icon" src="${tempIconUrl}" /><p class="tempDescrp">${description}</p>`;
 
       // Shows current time
       dayTime.innerText = moment().format("hh:mm a");
